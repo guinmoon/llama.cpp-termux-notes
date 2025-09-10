@@ -10,4 +10,4 @@ cd llama.cpp
 ./build_KleidiAI.sh
 ./build_OpenCL.sh
 ./build_Vulkan.sh
-./build_Vulkan_OpenCL
+./build_Vulkan_OpenCL.sh
