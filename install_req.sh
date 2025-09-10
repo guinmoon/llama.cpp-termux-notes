@@ -9,7 +9,6 @@ apt install clang wget just python cmake libcurl git screen  -y
 apt install perl libopenblas shaderc opencl-headers mesa-vulkan-icd-freedreno llama-cpp-backend-vulkan -y # blas,vk,mopencl
 
 
-echo "Cloning repo and llama.cpp"
-git clone --recurse-submodules https://github.com/guinmoon/llama.cpp-termux-notes
 
-cd llama.cpp-termux-notes/llama.cpp
+
+
