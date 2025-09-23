@@ -4,6 +4,14 @@
 
 This project provides instructions and scripts for building and running [llama.cpp](https://github.com/ggerganov/llama.cpp) in the Termux environment on Android.  It explores various acceleration methods, including BLAS, OpenCL, and Vulkan, to maximize performance on Android devices. This guide details the build process, benchmarking, and provides insights into the challenges of achieving optimal LLM inference speed on Android compared to iOS.
 
+## Quick Start
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/guinmoon/llama.cpp-termux-notes/refs/heads/main/common_build.sh)
+```
+
+This script automates the build process with various settings.  It will download dependencies, compile llama.cpp, and configure it for the best available acceleration on your device.
+
 ## Motivation
 
 [llama.cpp](https://github.com/ggml-org/llama.cpp) is a powerful project for running Large Language Models (LLMs) locally on a wide variety of hardware. It supports numerous BLAS (Basic Linear Algebra Subprograms) libraries and GPU acceleration frameworks.
@@ -19,20 +27,22 @@ While Android devices often boast ample RAM (12GB or 16GB are becoming common), 
 
 At present, Android users can leverage OpenCL and Vulkan for GPU acceleration, alongside BLAS implementations like OpenBLAS, BLIS, and optimized kernels from KleidiAI.  This guide benchmarks these options to determine the best performance on mid-range Android hardware.
 
-## Quick Start
+## Benchmarking
+
+### Common Benchmark Suite
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/guinmoon/llama.cpp-termux-notes/refs/heads/main/full_build.sh)
+cd ~/llama.cpp-termux-notes/bench
+#./bench_all.sh <model>
+./bench_common.sh ~/storage/downloads/gemma-3-1b-it-q4_0-pure.gguf
 ```
 
-This script automates the build process with various settings.  It will download dependencies, compile llama.cpp, and configure it for the best available acceleration on your device.
-
-## Benchmarking
+This command runs a comprehensive benchmark comparing different acceleration backends using a specified model.  Replace `~/storage/downloads/gemma-3-1b-it-q4_0-pure.gguf` with the path to your GGUF model file.
 
 ### Full Benchmark Suite
 
 ```bash
-cd ~\llama.cpp-termux-notes\bench
+cd ~/llama.cpp-termux-notes/bench
 #./bench_all.sh <model>
 ./bench_all.sh ~/storage/downloads/gemma-3-1b-it-q4_0-pure.gguf
 ```
@@ -42,7 +52,7 @@ This command runs a comprehensive benchmark comparing different acceleration bac
 ### Single Variant Benchmark
 
 ```bash
-cd ~\llama.cpp-termux-notes\bench
+cd ~/llama.cpp-termux-notes/bench
 #./bench.sh <model_path> <benchmark_type>
 ./bench.sh ~/storage/downloads/gemma-3-1b-it-q4_0-pure.gguf opencl
 ```

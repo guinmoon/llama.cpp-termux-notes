@@ -38,15 +38,15 @@ elif [[ "$TYPE" == *"kleidi"* ]]; then
     sleep 90
     echo "Running KLEIDI benchmarks (cores 0,1,2,3)"
     taskset -c 0,1,2,3 $LLAMACPP_PATH/build_kleidi/bin/llama-bench -m "$MODEL" -t 3 -ctk q8_0 -ctv q8_0 -fa 1 
-# elif [[ "$TYPE" == *"opencl_openblas"* ]]; then
-#     echo "Running OpenCL-OpenBLAS benchmarks (all cores)"
-#     LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib $LLAMACPP_PATH/build_vk_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 --device GPUOpenCL
-#     sleep 90
-#     echo "Running OpenCL-OpenBLAS benchmarks (cores 4,5,6,7)"
-#     LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib taskset -c 4,5,6,7 $LLAMACPP_PATH/build_vk_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 --device GPUOpenCL
-#     sleep 90
-#     echo "Running OpenCL-OpenBLAS benchmarks (cores 0,1,2,3)"
-#     LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib taskset -c 0,1,2,3 $LLAMACPP_PATH/build_vk_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 --device GPUOpenCL
+elif [[ "$TYPE" == *"opencl_openblas"* ]]; then
+    echo "Running OpenCL-OpenBLAS benchmarks (all cores)"
+    LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib $LLAMACPP_PATH/build_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 
+    sleep 90
+    echo "Running OpenCL-OpenBLAS benchmarks (cores 4,5,6,7)"
+    LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib taskset -c 4,5,6,7 $LLAMACPP_PATH/build_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 
+    sleep 90
+    echo "Running OpenCL-OpenBLAS benchmarks (cores 0,1,2,3)"
+    LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib taskset -c 0,1,2,3 $LLAMACPP_PATH/build_opencl_openblas/bin/llama-bench -m "$MODEL" -t 3 -fa 1 -ngl 99 
 elif [[ "$TYPE" == *"opencl"* ]]; then
     echo "Running OpenCL benchmarks (all cores)"
     LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib $LLAMACPP_PATH/build_opencl/bin/llama-bench -m "$MODEL" -t 3  -fa 1 -ngl 99
@@ -56,6 +56,15 @@ elif [[ "$TYPE" == *"opencl"* ]]; then
     sleep 90
     echo "Running OpenCL benchmarks (cores 0,1,2,3)"
     LD_LIBRARY_PATH=$LLAMACPP_PATH/:$PREFIX/lib taskset -c 0,1,2,3 $LLAMACPP_PATH/build_opencl/bin/llama-bench -m "$MODEL" -t 3 -fa 1
+elif [[ "$TYPE" == *"vk_openblas"* ]]; then
+    echo "Running Vulkan benchmarks (all cores)"
+    $LLAMACPP_PATH/build_vk_blas/bin/llama-bench -m "$MODEL" -t 3 -ctk q8_0 -ctv q8_0 -fa 1 -ngl 99
+    sleep 90
+    echo "Running Vulkan benchmarks (cores 4,5,6,7)"
+    taskset -c 4,5,6,7 $LLAMACPP_PATH/build_vk_blas/bin/llama-bench -m "$MODEL" -t 3 -ctk q8_0 -ctv q8_0 -fa 1 -ngl 99
+    sleep 90
+    echo "Running Vulkan benchmarks (cores 0,1,2,3)"
+    taskset -c 0,1,2,3 $LLAMACPP_PATH/build_vk_blas/bin/llama-bench -m "$MODEL" -t 3 -ctk q8_0 -ctv q8_0 -fa 1 -ngl 99
 elif [[ "$TYPE" == *"vk"* ]]; then
     echo "Running Vulkan benchmarks (all cores)"
     $LLAMACPP_PATH/build_vk/bin/llama-bench -m "$MODEL" -t 3 -ctk q8_0 -ctv q8_0 -fa 1 -ngl 99
